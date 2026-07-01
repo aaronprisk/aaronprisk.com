@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Aaron Prisk" />
+    <meta property="og:description" content="Technical writings, Open Source projects and other nerdy musings." />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="keywords" content="aaronprisk,linux,ubuntu">
+    <title>Aaron Prisk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --pg-vibrant-green: #37efba;    
+            --pg-vibrant-green-hover: #29d8a5; 
+            --pg-medium-blue: #3f79f8;      
+            --pg-white-text: #ffffff;
+            --pg-muted-text: rgba(255, 255, 255, 0.75); 
+            --pg-glass-color: rgba(255, 255, 255, 0.05);
+            --pg-glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        html, body {
+            margin: 0; padding: 0;
+            scroll-behavior: smooth;
+            color: var(--pg-white-text);
+            background-color: #02040a; /* Dark space background fallback */
+        }
+
+        /* -----------------------------------------------------------
+           SPACEY VISUAL BACKDROP
+        ----------------------------------------------------------- */
+        
+        /* The live canvas stays locked to the screen size */
+        #space-canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 1; /* Sits at the bottom */
+        }
+
+        /* The scrolling wrapper sits on top of the canvas and changes colors */
+        .gradient-scroll-wrapper {
+            position: relative;
+            width: 100%;
+            z-index: 2; /* Sits above the canvas */
+            /* Fades through space depths: Dark Space -> Nebula Purple -> Deep Cosmic Blue */
+            background: linear-gradient(to bottom, 
+                rgba(2, 4, 10, 0.4) 0%, 
+                rgba(19, 11, 43, 0.65) 35%, 
+                rgba(3, 27, 41, 0.8) 100%
+            );
+        }
+
+        /* -----------------------------------------------------------
+           SECTIONS & LAYOUT
+        ----------------------------------------------------------- */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 0;
+        }
+
+        .fullscreen-hero { height: 100vh; padding: 0; }
+
+        /* Floating Glass Panes */
+        .glass-pane {
+            background-color: var(--pg-glass-color);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--pg-glass-border);
+            border-radius: 28px;
+            padding: 3.5rem;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Cards in the glass panes */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba(55, 239, 186, 0.4); 
+        }
+
+        .text-muted-custom { color: var(--pg-muted-text); }
+        .text-shadow { text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
+
+        /* Navigation elements */
+        .btn-custom-green {
+            color: var(--pg-vibrant-green);
+            background-color: transparent;
+            border: 2px solid var(--pg-vibrant-green);
+            border-radius: 50px; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-custom-green:hover {
+            color: #02040a;
+            background-color: var(--pg-vibrant-green-hover);
+            border-color: var(--pg-vibrant-green-hover);
+        }
+
+        .badge-project-custom {
+            color: #fff;
+            background-color: var(--pg-medium-blue);
+            border-radius: 6px;
+            padding: 0.5em 0.8em;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        
+        /* transition classes for text links */
+        .link-hover {
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        .link-hover:hover {
+            color: var(--pg-vibrant-green) !important;
+            transform: translateX(4px);
+        }
+
+        .link-hover-green {
+            transition: color 0.2s ease;
+        }
+        .link-hover-green:hover {
+            color: var(--pg-vibrant-green) !important;
+        }
+
+        /* section helper */
+        .min-auto {
+            min-height: auto !important;
+        }
+        
+       /* -----------------------------------------------------------
+           GANDALF
+        ----------------------------------------------------------- */
+        .gandalf-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(2, 4, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999; /* Sits on top of absolutely everything */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        /* JS to trigger visibility */
+        .gandalf-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* footer icon styling */
+        .wizard-trigger {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            opacity: 0.25;
+        }
+
+        .wizard-trigger:hover {
+            transform: scale(1.3) rotate(-10deg);
+            opacity: 1;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <canvas id="space-canvas"></canvas>
+
+    <div class="gradient-scroll-wrapper">
+
+        <header class="fullscreen-hero d-flex align-items-center text-center w-100">
+            <div class="container position-relative">
+                <h1 class="display-1 fw-bold text-shadow">Technical writings, Open Source projects and other nerdy musings.</h1>
+                <p class="lead text-muted-custom fs-4 mb-5 text-shadow"></p>
+                <a href="#about" class="btn btn-custom-green btn-lg px-5 py-3 fs-5 shadow">Let's do it</a>
+            </div>
+        </header>
+
+        <section id="about">
+            <div class="container px-4 px-md-5">
+                <div class="glass-pane">
+                    <div class="row align-items-center g-5">
+                        <div class="col-md-6">
+                            <h2 class="fw-bold mb-3">About Me</h2>
+                            <hr class="w-25 mb-4" style="border-color: rgba(255,255,255,0.2); border-width: 2px;">
+                            <p class="lead text-muted-custom fs-5">
+                                Proud Parent | Community Engineer @ Canonical | Former K-12 IT Director | Open Source Advocate | Ubuntu Member | Linux/FreeBSD Fan | Mountain Biker | 🏳️‍🌈 ❤️ 🏳️‍⚧️
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="img/me.jpg" 
+                                 alt="Profile Photo" 
+                                 class="img-fluid rounded-4 shadow-sm" 
+                                 style="max-height: 400px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles">
+            <div class="container px-4 px-md-5">
+                <div class="glass-pane">
+                    <h2 class="fw-bold text-center mb-3">Featured Articles</h2>
+                    <hr class="w-25 mx-auto mb-5" style="border-color: rgba(255,255,255,0.2); border-width: 2px;">
+                    
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card h-100 glass-card bg-transparent">
+                                <div class="card-body d-flex flex-column p-4">
+                                    <span class="text-uppercase small fw-bold mb-2 tracking-wider" style="color: var(--pg-vibrant-green); font-size: 0.75rem;">Linux / Javascript</span>
+                                    <h4 class="card-title fw-bold text-white mb-3">Live streaming with VideoJS</h4>
+                                    <p class="card-text text-muted-custom small mb-4">Learn how you can use the VideoJS framework to create your very own live video player right within your website.</p>
+                                    <a href="https://opensource.com/article/20/2/video-streaming-tools" target="_blank" class="mt-auto text-white text-decoration-none fw-semibold small link-hover">Read Article &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card h-100 glass-card bg-transparent">
+                                <div class="card-body d-flex flex-column p-4">
+                                    <span class="text-uppercase small fw-bold mb-2 tracking-wider" style="color: var(--pg-medium-blue); font-size: 0.75rem;">Linux / FreeBSD / NGINX</span>
+                                    <h4 class="card-title fw-bold text-white mb-3">Build your own live streaming server</h4>
+                                    <p class="card-text text-muted-custom small mb-4">Forget YouTube and Twitch! Build your very own live streaming video server using all open source. Guides for Linux and FreeBSD...</p>
+                                    <a href="https://opensource.com/article/19/1/basic-live-video-streaming-server" target="_blank" class="mt-auto text-white text-decoration-none fw-semibold small link-hover">Read Article &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card h-100 glass-card bg-transparent">
+                                <div class="card-body d-flex flex-column p-4">
+                                    <span class="text-uppercase small fw-bold mb-2 tracking-wider" style="color: var(--pg-vibrant-green); font-size: 0.75rem;">Linux / Education</span>
+                                    <h4 class="card-title fw-bold text-white mb-3">Ubuntu in education: A K-12 IT Director’s experience</h4>
+                                    <p class="card-text text-muted-custom small mb-4">How a rural school district found freedom, performance and savings choosing Ubuntu Linux as their operating system.</p>
+                                    <a href="https://ubuntu.com/blog/ubuntu-in-education-a-k-12-it-directors-experience" target="_blank" class="mt-auto text-white text-decoration-none fw-semibold small link-hover">Read Article &rarr;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="projects">
+            <div class="container px-4 px-md-5">
+                <div class="glass-pane">
+                    <h2 class="fw-bold text-center mb-3">Projects</h2>
+                    <hr class="w-25 mx-auto mb-5" style="border-color: rgba(255,255,255,0.2); border-width: 2px;">
+                    <div class="row align-items-center g-5 mb-5 pb-5" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div class="col-md-4 text-center">
+                                <img src="img/planet.png" 
+                                 alt="Profile Photo" 
+                                 class="img-fluid rounded-4 shadow-sm" 
+                                 style="max-height: 150px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15);">
+                        </div>
+                        <div class="col-md-8">
+                            <a href="https://github.com/Ubuntu-Community-Team/terra" class="fw-bold text-white mb-2 h4 text-decoration-none">Terra</a>
+                            <p class="text-muted-custom">A modern rebuild of the old Planet Ubuntu RSS aggregator that runs entirely on Github. Planet Ubuntu gives the public a window into the world, work and lives of official Ubuntu Members.</p>
+                            <div class="pt-2">
+                                <span class="badge badge-project-custom">HTML</span>
+                                <span class="badge badge-project-custom">CSS</span>
+                                <span class="badge badge-project-custom">JS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row align-items-center g-5 mb-5 pb-5" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <div class="col-md-8 order-2 order-md-1">
+                            <a href="https://ubucon.org/" class="fw-bold text-white mb-2 h4 text-decoration-none">Ubucon.org</a>
+                            <p class="text-muted-custom">UbuCons are volunteer run, regional events that enable the global community of Ubuntu teams, users, and organizations to come together to work on current challenges, share knowledge, and network within the Ubuntu project.</p>
+                            <div class="pt-2">
+                                <span class="badge badge-project-custom">HTML</span>
+                                <span class="badge badge-project-custom">CSS</span>
+                                <span class="badge badge-project-custom">JS</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center order-1 order-md-2">
+                               <img src="img/community.png" 
+                                 alt="Profile Photo" 
+                                 class="img-fluid rounded-4 shadow-sm" 
+                                 style="max-height: 150px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15);">
+                        </div>
+                    </div>
+                    
+                    <div class="row align-items-center g-5">
+                        <div class="col-md-4 text-center">
+                                <img src="img/corvos.png" 
+                                 alt="Profile Photo" 
+                                 class="img-fluid rounded-4 shadow-sm" 
+                                 style="max-height: 150px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15);">
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="fw-bold text-white mb-2">CorvOS Project</h4>
+                            <p class="text-muted-custom">CorvOS is a custom spin of Ubuntu Linux crafted specifically for K12 education. The project goal is to give educators and administrators an eco-friendly, privacy respecting and reliable choice for their districts and schools.</p>
+                            <p>More info coming soon...</p>
+                            <div class="pt-2">
+                                <span class="badge badge-project-custom">Linux</span>
+                                <span class="badge badge-project-custom">Python</span>
+                                <span class="badge badge-project-custom">BASH</span>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="connect" class="min-auto py-4">
+            <div class="container px-4 px-md-5">
+                <div class="row justify-content-center">
+                    <div class="col-max col-md-8 col-lg-6">
+                        <div class="glass-pane py-3 px-4 rounded-pill text-center d-flex align-items-center justify-content-between flex-wrap gap-3">
+                            <span class="fw-semibold small text-white-50 ms-md-2">Connect with me:</span>
+                            <div class="d-flex gap-4 mx-auto mx-md-0 me-md-2">
+                                <a href="https://github.com/aaronprisk" class="text-white text-decoration-none small link-hover-green fw-medium">GitHub</a>
+                                <a href="https://www.linkedin.com/in/aaron-prisk-72a15363/" class="text-white text-decoration-none small link-hover-green fw-medium">LinkedIn</a>
+                                <a href="https://fosstodon.org/@AKernelPanic" class="text-white text-decoration-none small link-hover-green fw-medium">Mastodon</a>
+                                <a href="https://www.youtube.com/@aaronprisk" class="text-white text-decoration-none small link-hover-green fw-medium">YouTube</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-5">
+            <div class="container">
+                <small class="text-muted-custom">
+                    &copy; 2026. Aaron Prisk. 
+                    <span class="wizard-trigger ms-2" onclick="summonGandalf()" title="???">🧙‍♂️</span>
+                </small>
+            </div>
+        </footer>
+
+        <!-- Gandalf Modal Window -->
+        <div id="gandalfModal" class="gandalf-overlay">
+            <div class="text-center p-4 rounded-4 shadow" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); max-width: 560px; width: 90%;">
+                
+                <!-- The Responsive YouTube Embed Wrapper -->
+                <div class="ratio ratio-16x9 mb-4 rounded-3 overflow-hidden shadow">
+                    <!-- Video ID: TcdpZwEVz83D2 is the classic Sax Gandalf loop -->
+                    <iframe id="gandalfEmbed" 
+                            src="https://www.youtube.com/embed/TcdpZwEVz83D2?enablejsapi=1&version=3&playerapiid=ytplayer&loop=1&playlist=TcdpZwEVz83D2&controls=0&modestbranding=1&rel=0" 
+                            title="Epic Sax Gandalf" 
+                            allow="autoplay; encrypted-media" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <h3 class="fw-bold text-white mb-2">You Shall Pass! 🎷</h3>
+                
+                <button class="btn btn-custom-green px-4 py-2" onclick="dismissGandalf()">Return to Reality</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+    const canvas = document.getElementById('space-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    const numStars = 200; // Crisp and performant
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars(); 
+    }
+
+    function initStars() {
+        stars = [];
+        for (let i = 0; i < numStars; i++) {
+            let speedFactor = Math.random();
+            // 80% white stars, 20% slight blue cosmic stars
+            let color = speedFactor > 0.8 ? '#a0bcff' : '#ffffff'; 
+
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: (speedFactor * 1.4) + 0.2, 
+                speed: speedFactor * 0.3 + 0.05, // Gentle drifting velocity
+                color: color
+            });
+        }
+    }
+
+    function updateAndDrawStars() {
+        for (let i = 0; i < stars.length; i++) {
+            let s = stars[i];
+            
+            // star movement
+            s.y -= s.speed;
+
+            // seamless boundary wrap
+            if (s.y < 0) s.y = canvas.height;
+
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+            ctx.fillStyle = s.color;
+            ctx.fill();
+        }
+    }
+
+    function animateUniverse() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        updateAndDrawStars(); 
+        requestAnimationFrame(animateUniverse); 
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas(); 
+    animateUniverse(); 
+    
+    function summonGandalf() {
+        const modal = document.getElementById('gandalfModal');
+        const iframe = document.getElementById('gandalfEmbed');
+        
+        // frosted glass curtain overlay
+        modal.classList.add('active');
+        
+        // Youtube iframe
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
+    function dismissGandalf() {
+        const modal = document.getElementById('gandalfModal');
+        const iframe = document.getElementById('gandalfEmbed');
+        
+        // hide the visual modal window
+        modal.classList.remove('active');
+        
+        // pause iframe audio/video stream
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+    </script>
+</body>
+</html>
