@@ -179,7 +179,7 @@
         <div class="workspace-container">
             
             <div class="glass-pane archive-sidebar">
-                <div class="archive-title">📖 Archive Logs</div>
+                <div class="archive-title">📖 Blog Posts</div>
                 <ul class="posts-list" id="posts-index">
                     <li style="color: var(--pg-muted-text); font-style: italic; font-size: 0.9rem;">Gathering thoughts...</li>
                 </ul>
@@ -187,8 +187,8 @@
 
             <div class="glass-pane content-display">
                 <div id="rendered-markdown">
-                    <h1>Welcome to the Archive</h1>
-                    <p class="text-muted-custom">Select a log sequence item from the left directory column index to render the technical logs layout on screen.</p>
+                    <h1>Welcome to the blog</h1>
+                    <p class="text-muted-custom">I'm glad you are here! Please select one of the blog posts from the pane on the left.</p>
                 </div>
             </div>
 
@@ -196,13 +196,15 @@
     </div>
 
     <script>
-    const LOCAL_TEST_MODE = false; // Turned off for live Pages deployment
-
+    const LOCAL_TEST_MODE = false;
     const GITHUB_USERNAME = "aaronprisk"; 
     const REPO_NAME = "aaronprisk.com"; 
 
-    // Static testing array (Ignored in production mode)
-    const localTestFiles = [];
+    // Static testing array (Used only when LOCAL_TEST_MODE = true)
+    const localTestFiles = [
+        "test-one.md",
+        "test-two.md"
+    ];
 
     window.addEventListener('DOMContentLoaded', initializeBlogView);
 
@@ -210,9 +212,13 @@
         const indexUl = document.getElementById('posts-index');
         indexUl.innerHTML = '';
 
+        // Check URL for a specific post
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetPostParam = urlParams.get('post');
+
         if (LOCAL_TEST_MODE) {
             localTestFiles.forEach(file => {
-                createListElement(file, `./blog/${file}`);
+                createListElement(file, `./blog/${file}`, targetPostParam);
             });
         } else {
             // Contact GitHub API infrastructure directly for live files
@@ -230,7 +236,7 @@
                 }
 
                 mdFiles.forEach(file => {
-                    createListElement(file.name, file.download_url);
+                    createListElement(file.name, file.download_url, targetPostParam);
                 });
             } catch (err) {
                 indexUl.innerHTML = '<li class="small text-danger p-2">Failed to retrieve archive index.</li>';
@@ -238,25 +244,37 @@
         }
     }
 
-    function createListElement(filename, fetchUrl) {
+    function createListElement(filename, fetchUrl, targetPostParam) {
         const indexUl = document.getElementById('posts-index');
         const li = document.createElement('li');
         li.className = 'post-link-item';
         
-        // Clean up titles beautifully (e.g., "2026-07-14-my-post.md" -> "My Post")
-        let displayName = filename.replace('.md', '').replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ');
+        // Clean up titles 
+        const cleanSlug = filename.replace('.md', '');
+        let displayName = cleanSlug.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ');
         li.innerText = displayName;
 
+        // Renders post and silently pushes slug to browser URL
         li.addEventListener('click', async () => {
             document.querySelectorAll('.post-link-item').forEach(el => el.classList.remove('active'));
             li.classList.add('active');
-            await renderMarkdownPost(fetchUrl);
+            
+            // Updates the URL bar without triggering a page reload
+            const newUrl = `${window.location.pathname}?post=${cleanSlug}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+
+            await renderMarkdownPost(fetchUrl, displayName);
         });
 
         indexUl.appendChild(li);
+
+        // If the URL parameter matches this post's slug on load, trigger the click automatically
+        if (targetPostParam && targetPostParam === cleanSlug) {
+            li.click();
+        }
     }
 
-    async function renderMarkdownPost(targetUrl) {
+    async function renderMarkdownPost(targetUrl, postTitle) {
         const displayDiv = document.getElementById('rendered-markdown');
         displayDiv.innerHTML = '<p class="text-muted-custom italic">Parsing document buffers...</p>';
 
@@ -274,6 +292,10 @@
 
             // Render out standard HTML tags via Marked engine
             displayDiv.innerHTML = marked.parse(text);
+
+            // Update the browser's tab title to match the active post
+            document.title = `${postTitle} | Aaron Prisk`;
+
         } catch (err) {
             displayDiv.innerHTML = `<h1>Error</h1><p class="text-danger">Failed to capture markdown assets.</p>`;
         }
