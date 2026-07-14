@@ -1,348 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aaron Prisk | Blog</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-        :root {
-            --pg-vibrant-green: #37efba;    
-            --pg-vibrant-green-hover: #29d8a5; 
-            --pg-medium-blue: #3f79f8;      
-            --pg-white-text: #ffffff;
-            --pg-muted-text: rgba(255, 255, 255, 0.75); 
-            --pg-glass-color: rgba(255, 255, 255, 0.05);
-            --pg-glass-border: rgba(255, 255, 255, 0.12);
-        }
+---
+layout: default
+---
+<style>
+    /* Main Layout Grid */
+    .workspace-container {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
 
-        html, body {
-            margin: 0; padding: 0;
-            color: var(--pg-white-text);
-            background-color: #02040a;
-            height: 100vh;
-            overflow: hidden;
-        }
+    /* Standard Desktop Sidebar Style */
+    .archive-sidebar {
+        width: 300px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .archive-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
 
-        #space-canvas {
-            position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 1;
-        }
+    .posts-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        overflow-y: auto;
+        flex: 1;
+    }
 
-        .gradient-scroll-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            z-index: 2;
-            background: linear-gradient(to bottom, 
-                rgba(2, 4, 10, 0.4) 0%, 
-                rgba(19, 11, 43, 0.65) 35%, 
-                rgba(3, 27, 41, 0.8) 100%
-            );
-            display: flex;
-            flex-direction: column;
-        }
+    .post-link-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: var(--pg-muted-text);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-        /* Top Navigation Header */
-        .blog-nav {
-            background: rgba(2, 4, 10, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--pg-glass-border);
-            padding: 1rem 2rem;
-        }
-        .nav-logo {
-            color: var(--pg-white-text);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.25rem;
-            transition: color 0.2s;
-        }
-        .nav-logo:hover { color: var(--pg-vibrant-green); }
+    .post-link-item:hover, .post-link-item.active {
+        color: #02040a !important;
+        background-color: var(--pg-vibrant-green);
+        border-color: var(--pg-vibrant-green);
+        transform: translateX(4px);
+    }
 
-        /* Main Double-Pane Setup */
+    /* Main Content Area */
+    .content-display {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    .post-body {
+        line-height: 1.7;
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    .post-body h1 {
+        font-weight: 700;
+        color: var(--pg-white-text);
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(255,255,255,0.1);
+        padding-bottom: 0.5rem;
+        font-size: 2rem;
+    }
+    .post-body h2, .post-body h3 {
+        color: var(--pg-white-text);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .post-body code {
+        background: rgba(255,255,255,0.1);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: var(--pg-vibrant-green);
+    }
+    .post-body pre {
+        background: rgba(0,0,0,0.4);
+        border: 1px solid var(--pg-glass-border);
+        padding: 1.5rem;
+        border-radius: 12px;
+        overflow-x: auto;
+    }
+    .post-body pre code {
+        color: var(--pg-white-text);
+        background: transparent;
+        padding: 0;
+    }
+
+    /* --- RESPONSIVE OVERRIDES --- */
+    @media (max-width: 991.98px) {
         .workspace-container {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-            padding: 2rem;
-            gap: 2rem;
+            padding: 1rem;
         }
-
-        .glass-pane {
-            background-color: var(--pg-glass-color);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--pg-glass-border);
-            border-radius: 24px;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Left Side: Directory Archive */
-        .archive-sidebar {
-            width: 300px;
-            padding: 1.5rem;
-        }
-        .archive-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        .posts-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            overflow-y: auto;
-            flex: 1;
-        }
-        .post-link-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--pg-muted-text);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .post-link-item:hover, .post-link-item.active {
-            color: #02040a;
-            background-color: var(--pg-vibrant-green);
-            border-color: var(--pg-vibrant-green);
-            transform: translateX(4px);
-        }
-
         .content-display {
-            flex: 1;
-            padding: 3rem;
-            overflow-y: auto;
-        }
-
-        #rendered-markdown {
-            line-height: 1.7;
-            font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        #rendered-markdown h1 {
-            font-weight: 700;
-            color: var(--pg-white-text);
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.5rem;
-        }
-        #rendered-markdown h2, #rendered-markdown h3 {
-            color: var(--pg-white-text);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-        #rendered-markdown code {
-            background: rgba(255,255,255,0.1);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--pg-vibrant-green);
-        }
-        #rendered-markdown pre {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--pg-glass-border);
             padding: 1.5rem;
-            border-radius: 12px;
-            overflow-x: auto;
+            border-radius: 16px;
         }
-        #rendered-markdown pre code {
-            color: var(--pg-white-text);
-            background: transparent;
-            padding: 0;
+        /* Style adjustments when sidebar turns into a sliding panel */
+        .archive-sidebar.offcanvas-lg {
+            background-color: rgba(10, 12, 22, 0.95) !important;
+            border-right: 1px solid var(--pg-glass-border);
+            border-radius: 0;
         }
-    </style>
-</head>
-<body>
+        .post-body h1 {
+            font-size: 1.6rem;
+        }
+    }
+</style>
 
-    <canvas id="space-canvas"></canvas>
+<!-- Update Header Nav with dynamic toggle button -->
+<nav class="blog-nav d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-3">
+        <!-- Hamburger menu button visible only on mobile screens -->
+        <button class="btn btn-outline-light d-lg-none rounded-pill px-3 py-1 border-0" 
+                type="button" 
+                data-bs-toggle="offcanvas" 
+                data-bs-target="#sidebarMenu" 
+                aria-controls="sidebarMenu" 
+                style="background: rgba(255,255,255,0.05); font-size: 0.85rem;">
+            📖 Menu
+        </button>
+        <a href="/index.html" class="nav-logo">&larr; Aaron Prisk</a>
+    </div>
+    <span class="text-uppercase small tracking-wider fw-bold d-none d-sm-inline" style="color: var(--pg-vibrant-green);"></span>
+</nav>
 
-    <div class="gradient-scroll-wrapper">
+<div class="workspace-container">
+    
+    <!-- Collapsible Responsive Sidebar -->
+    <!-- offcanvas-lg stays embedded on desktop, but hides as a sliding menu on screens under 992px wide -->
+    <div class="glass-pane archive-sidebar offcanvas-lg offcanvas-start" 
+         tabindex="-1" 
+         id="sidebarMenu" 
+         aria-labelledby="sidebarMenuLabel">
         
-        <nav class="blog-nav d-flex justify-content-between align-items-center">
-            <a href="index.html" class="nav-logo">&larr; Aaron Prisk</a>
-            <span class="text-uppercase small tracking-wider fw-bold" style="color: var(--pg-vibrant-green);"></span>
-        </nav>
+        <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3 pb-2">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">📖 Table of Contents</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+        </div>
 
-        <div class="workspace-container">
-            
-            <div class="glass-pane archive-sidebar">
-                <div class="archive-title">📖 Blog Posts</div>
-                <ul class="posts-list" id="posts-index">
-                    <li style="color: var(--pg-muted-text); font-style: italic; font-size: 0.9rem;">Gathering thoughts...</li>
-                </ul>
-            </div>
-
-            <div class="glass-pane content-display">
-                <div id="rendered-markdown">
-                    <h1>Welcome to the blog</h1>
-                    <p class="text-muted-custom">I'm glad you are here! Please select one of the blog posts from the pane on the left.</p>
-                </div>
-            </div>
-
+        <div class="offcanvas-body d-flex flex-column h-100 p-0">
+            <div class="archive-title d-none d-lg-block">📖 Blog Posts</div>
+            <ul class="posts-list">
+                {% for post in site.posts %}
+                    <li>
+                        <!-- Added close event behavior to close mobile menu automatically upon navigation -->
+                        <a href="{{ post.url }}" 
+                           class="post-link-item {% if page.url == post.url %}active{% endif %}"
+                           data-bs-dismiss="offcanvas"
+                           data-bs-target="#sidebarMenu">
+                            {{ post.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 
-    <script>
-    const LOCAL_TEST_MODE = false;
-    const GITHUB_USERNAME = "aaronprisk"; 
-    const REPO_NAME = "aaronprisk.com"; 
-
-    // Static testing array (Used only when LOCAL_TEST_MODE = true)
-    const localTestFiles = [
-        "test-one.md",
-        "test-two.md"
-    ];
-
-    window.addEventListener('DOMContentLoaded', initializeBlogView);
-
-    async function initializeBlogView() {
-        const indexUl = document.getElementById('posts-index');
-        indexUl.innerHTML = '';
-
-        // Check URL for a specific post
-        const urlParams = new URLSearchParams(window.location.search);
-        const targetPostParam = urlParams.get('post');
-
-        if (LOCAL_TEST_MODE) {
-            localTestFiles.forEach(file => {
-                createListElement(file, `./blog/${file}`, targetPostParam);
-            });
-        } else {
-            // Contact GitHub API infrastructure directly for live files
-            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/blog`;
-            try {
-                const response = await fetch(url);
-                const files = await response.json();
+    <!-- Main Content Container -->
+    <div class="glass-pane content-display">
+        {% assign latest_post = site.posts.first %}
+        {% if latest_post %}
+            <article class="post-body">
+                <h1>{{ latest_post.title }}</h1>
+                <p class="text-muted-custom small mb-4">Posted on {{ latest_post.date | date: "%B %d, %Y" }}</p>
                 
-                // Filter down to markdown files and sort reverse-chronologically
-                const mdFiles = files.filter(f => f.name.endsWith('.md')).reverse();
+                {{ latest_post.content }}
+            </article>
+        {% else %}
+            <article class="post-body">
+                <h1>Welcome to my slice of the interwebs</h1>
+                <p class="text-muted-custom">No entries have been written to the <code>_posts</code> directory yet.</p>
+            </article>
+        {% endif %}
+    </div>
 
-                if(mdFiles.length === 0) {
-                    indexUl.innerHTML = '<li class="small text-white-50 p-2 italic">No logs written yet.</li>';
-                    return;
-                }
-
-                mdFiles.forEach(file => {
-                    createListElement(file.name, file.download_url, targetPostParam);
-                });
-            } catch (err) {
-                indexUl.innerHTML = '<li class="small text-danger p-2">Failed to retrieve archive index.</li>';
-            }
-        }
-    }
-
-    function createListElement(filename, fetchUrl, targetPostParam) {
-        const indexUl = document.getElementById('posts-index');
-        const li = document.createElement('li');
-        li.className = 'post-link-item';
-        
-        // Clean up titles 
-        const cleanSlug = filename.replace('.md', '');
-        let displayName = cleanSlug.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ');
-        li.innerText = displayName;
-
-        // Renders post and silently pushes slug to browser URL
-        li.addEventListener('click', async () => {
-            document.querySelectorAll('.post-link-item').forEach(el => el.classList.remove('active'));
-            li.classList.add('active');
-            
-            // Updates the URL bar without triggering a page reload
-            const newUrl = `${window.location.pathname}?post=${cleanSlug}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-
-            await renderMarkdownPost(fetchUrl, displayName);
-        });
-
-        indexUl.appendChild(li);
-
-        // If the URL parameter matches this post's slug on load, trigger the click automatically
-        if (targetPostParam && targetPostParam === cleanSlug) {
-            li.click();
-        }
-    }
-
-    async function renderMarkdownPost(targetUrl, postTitle) {
-        const displayDiv = document.getElementById('rendered-markdown');
-        displayDiv.innerHTML = '<p class="text-muted-custom italic">Parsing document buffers...</p>';
-
-        try {
-            const response = await fetch(targetUrl);
-            let text = await response.text();
-
-            // Clean YAML front-matter header metadata wrappers smoothly if present
-            if (text.startsWith('---')) {
-                const sections = text.split('---');
-                if (sections.length >= 3) {
-                    text = sections.slice(2).join('---').trim();
-                }
-            }
-
-            // Render out standard HTML tags via Marked engine
-            displayDiv.innerHTML = marked.parse(text);
-
-            // Update the browser's tab title to match the active post
-            document.title = `${postTitle} | Aaron Prisk`;
-
-        } catch (err) {
-            displayDiv.innerHTML = `<h1>Error</h1><p class="text-danger">Failed to capture markdown assets.</p>`;
-        }
-    }
-
-    const canvas = document.getElementById('space-canvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-    const numStars = 150;
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
-    }
-
-    function initStars() {
-        stars = [];
-        for (let i = 0; i < numStars; i++) {
-            let factor = Math.random();
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: (factor * 1.3) + 0.2,
-                speed: factor * 0.25 + 0.05,
-                color: factor > 0.85 ? '#a0bcff' : '#ffffff'
-            });
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < stars.length; i++) {
-            let s = stars[i];
-            s.y -= s.speed;
-            if (s.y < 0) s.y = canvas.height;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-            ctx.fillStyle = s.color;
-            ctx.fill();
-        }
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    animate();
-    </script>
-</body>
-</html>
+</div>
