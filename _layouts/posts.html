@@ -2,6 +2,7 @@
 layout: default
 ---
 <style>
+    /* Main Layout Grid */
     .workspace-container {
         flex: 1;
         display: flex;
@@ -10,6 +11,7 @@ layout: default
         gap: 1.5rem;
     }
 
+    /* Desktop Sidebar Style */
     .archive-sidebar {
         width: 300px;
         padding: 1.5rem;
@@ -56,13 +58,13 @@ layout: default
         transform: translateX(4px);
     }
 
+    /* Main Content Area */
     .content-display {
         flex: 1;
         padding: 2rem;
         overflow-y: auto;
     }
 
-    /* Markdown elements styling */
     .post-body {
         line-height: 1.7;
         font-size: 1.05rem;
@@ -125,7 +127,7 @@ layout: default
     
     <!-- Collapsible Responsive Sidebar -->
     <div class="glass-pane archive-sidebar offcanvas-lg offcanvas-start" 
-         tabindex="-1; " 
+         tabindex="-1" 
          id="sidebarMenu" 
          aria-labelledby="sidebarMenuLabel">
         
@@ -157,7 +159,7 @@ layout: default
             <h1>{{ page.title }}</h1>
             <p class="text-muted-custom small mb-4">Posted on {{ page.date | date: "%B %d, %Y" }}</p>
             
-            {{ content }} <!-- Compiled Markdown content injected here! -->
+            {{ content }} <!-- Injects the compiled post markdown text smoothly inside our glass wrapper -->
         </article>
     </div>
 
