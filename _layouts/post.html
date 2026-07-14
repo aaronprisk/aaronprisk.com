@@ -112,7 +112,7 @@ layout: default
             padding: 1.5rem;
             border-radius: 16px;
         }
-        .archive-sidebar.canvas-lg {
+        .archive-sidebar.offcanvas-lg {
             background-color: rgba(10, 12, 22, 0.95) !important;
             border-right: 1px solid var(--pg-glass-border);
             border-radius: 0;
@@ -146,8 +146,6 @@ layout: default
                     <li>
                         <a href="{{ post.url }}" 
                            class="post-link-item {% if page.url == post.url %}active{% endif %}"
-                           data-bs-dismiss="offcanvas"
-                           data-bs-target="#sidebarMenu">
                             {{ post.title }}
                         </a>
                     </li>
