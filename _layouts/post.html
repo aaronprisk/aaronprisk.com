@@ -128,7 +128,6 @@ layout: default
 
 <div class="workspace-container">
     
-    <!-- Collapsible Responsive Sidebar -->
     <div class="glass-pane archive-sidebar offcanvas-lg offcanvas-start" 
          tabindex="-1" 
          id="sidebarMenu" 
@@ -144,8 +143,7 @@ layout: default
             <ul class="posts-list">
                 {% for post in site.posts %}
                     <li>
-                        <a href="{{ post.url }}" 
-                           class="post-link-item {% if page.url == post.url %}active{% endif %}"
+                        <a href="{{ post.url }}" class="post-link-item {% if page.url == post.url %}active{% endif %}">
                             {{ post.title }}
                         </a>
                     </li>
@@ -154,13 +152,20 @@ layout: default
         </div>
     </div>
 
-    <!-- Main Content Panel -->
     <div class="glass-pane content-display">
         <article class="post-body">
+            {% if page.tags.size > 0 %}
+            <div class="mb-2 d-flex flex-wrap gap-1">
+                {% for tag in page.tags %}
+                <span class="badge badge-project-custom" style="font-size: 0.75rem; padding: 0.4em 0.7em;">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             <h1>{{ page.title }}</h1>
             <p class="text-muted-custom small mb-4">Posted on {{ page.date | date: "%B %d, %Y" }}</p>
             
-            {{ content }} <!-- Injects the compiled post markdown text smoothly inside our glass wrapper -->
+            {{ content }}
         </article>
     </div>
 
