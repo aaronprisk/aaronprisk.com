@@ -23,11 +23,11 @@ Back to the current times, while I was scoping out the rebuild for my website, I
 ## Less is more
 Naturally I checked out the various static site generators out there like Jekyll, Hugo, Gatsby along with the various tools used to publish to them. They're all stellar pieces of software and all have a lot to offer, but.. I wanted something so simple, so barebones, and so zen that it feels like it could belong on my old Commodore VIC-20. As any Linux nerd does, I couldn't find exactly what I wanted so I opted to build something else!
 
-The questions that naturally arise are probably:
-Aren't there other static site publishing tools out there? Yep.
-Do those tools have more bells and whistles? Most certainly. 
-Do we really need yet another piece of software out there to do X? Nah.. probably not.
-So why go to all the trouble? Because it's fun! :)
+* The questions that naturally arise are probably:
+* Aren't there other static site publishing tools out there? Yep.
+* Do those tools have more bells and whistles? Most certainly. 
+* Do we really need yet another piece of software out there to do X? Nah.. probably not.
+* So why go to all the trouble? Because it's fun! :)
 
 ## By Walden pond
 After a weekend of coffee fueled late nights, Walden was born. 
@@ -35,12 +35,12 @@ After a weekend of coffee fueled late nights, Walden was born.
 ![Image Description](/img/asset-1784747310429.png)
 
 It features the following:
-- Sleek and simple markdown editor powered by EasyMDE
-- Ability to sync with a GitHub pages (Jekyll) or a plain old /blog directory
-- Essential SEO settings for discoverability
-- Easy image uploading and linking
-- Local draft saving
-- ..and that's about it.
+* Sleek and simple markdown editor powered by EasyMDE
+* Ability to sync with a GitHub pages (Jekyll) or a plain old /blog directory
+* Essential SEO settings for discoverability
+* Easy image uploading and linking
+* Local draft saving 
+* ..and that's about it.
 
 These markdown files are pushed to my website repo, Github pages does it's Jekyll-y background magic and the next time someone visits my site, they will be greeted to a nicely rendered collection of thoughts. That's it! Nothing too sexy, but exactly what I was hoping for. I know that I can simply install Walden on any device, toss in my settings and start jotting down my thoughts. Aside from some basic quality of life improvements and bug fixes, I don't plan on adding much more to it. After all - *"A man is rich in proportion to the number of things he can afford to let alone"*
 
@@ -53,7 +53,7 @@ Now I have no idea if my unique brand of silliness and love for a purposefully l
 
 Or simply run:
 
-> snap install walden
+**snap install walden**
 
 ## Raise your sail
 
