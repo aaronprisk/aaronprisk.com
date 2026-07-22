@@ -6,7 +6,7 @@ description: "Introduction to Walden - A minimal, distraction-free, local deskto
 tags: [Linux, Ubuntu, Snap, Walden]
 ---
 
-To kick off this summer, I decided to read the novel Walden by Henry David Thoreau, the great American novelist and transcendentalist thinker. Almost immediately did I feel a strong kinship to Henry and his desire to escape the often overwhelming and obfuscating nature of modern life. To capture, as he puts it so eloquently, “..to want but little.” This yearning to find joy, peace and contentment in having less when there is a constant barrage of voices pushing you to pursue more.
+To kick off this summer, I decided to read Walden by Henry David Thoreau, the great American novelist and transcendentalist thinker. Almost immediately did I feel a strong kinship to Henry and his desire to escape the often overwhelming and obfuscating nature of modern life. To capture, as he puts it so eloquently, “..to want but little.” This yearning to find joy, peace and contentment in having less when there is a constant barrage of voices pushing you to pursue more.
 
 ## My slice of the interwebs
 Around the same time, I realized that my personal website (the one you are visiting at the moment) was a bit dusty. It had gone through two major revamps since I first registered the domain back in the early twenty teens. Its first incarnation was a Wordpress backed blog where I would share my work deploying Linux in schools and other nerdy side projects. It was from that site that I was discovered by an editor from OpenSource.com (Looking at you Don!) and encouraged to pen a couple articles for their site. That was an amazing experience and I was shocked at how far my few articles traveled and the sheer volume of people who read them. I still have folks reach out to me on LinkedIn telling me how one of my articles helped them do something cool. 
@@ -42,7 +42,9 @@ It features the following:
 * Local draft saving 
 * ..and that's about it.
 
-These markdown files are pushed to my website repo, Github pages does it's Jekyll-y background magic and the next time someone visits my site, they will be greeted to a nicely rendered collection of thoughts. That's it! Nothing too sexy, but exactly what I was hoping for. I know that I can simply install Walden on any device, toss in my settings and start jotting down my thoughts. Aside from some basic quality of life improvements and bug fixes, I don't plan on adding much more to it. After all - *"A man is rich in proportion to the number of things he can afford to let alone"*
+These markdown files are pushed to my website repo, Github pages does it's Jekyll-y background magic and the next time someone visits my site, they will be greeted to a nicely rendered collection of thoughts. That's it! Nothing too sexy, but exactly what I was hoping for. I know that I can simply install Walden on any device, toss in my settings and start jotting down my thoughts. Aside from some basic quality of life improvements and bug fixes, I don't plan on adding much more to it. After all:
+
+*"A man is rich in proportion to the number of things he can afford to let alone"*
 
 ## In a Snap
 I'm sure I will be accused of bias here due to my affiliation with Canonical, but I genuinely appreciate the simplicity of Snaps. With Walden being a very simple Electron app with a small number of libraries, I was able to package it up and get it onto the Snap store in no time. In the future when I need to push updates or bugfixes, it's extremely trivial and can be done in a matter of minutes. 
