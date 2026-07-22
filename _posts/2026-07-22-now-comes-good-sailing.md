@@ -17,13 +17,13 @@ So with the lack of need for a personal blog plus the added headache of keeping 
 ## The blog is dead. Long live the blog.
 2023 rolls around and Red Hat pulls the plug on OpenSource.com along with my preferred space to share the fun, geeky stuff I was tinkering with. With it gone and my focus mainly shifting to new job opportunities and family life, I shelved my personal publishing hobby.
 
-Back to the current times, while I was scoping out the rebuild for my website, I decided that I missed having that little space where I could jot down some thoughts in a less rigid or structured manner. I decided I was going to spin up a new blog and it was NOT going to be Wordpress this go around. I also decided to move away from my trusted VPS instance on Digital Ocean that had basically been running like a champ for nearly 10 years. Pour one out for a legend.. 
+Back to the current times, while I was scoping out the rebuild for my website, I decided that I missed having that little space where I could jot down some thoughts in a less rigid or structured manner. I decided I was going to spin up a new blog and it was NOT going to be Wordpress this go around. I also decided to move away from my trusted VPS instance on Digital Ocean that had basically been running like a champ for nearly 10 years. Pour one out for a legend.. 🫡
 
 
 ## Less is more
 Naturally I checked out the various static site generators out there like Jekyll, Hugo, Gatsby along with the various tools used to publish to them. They're all stellar pieces of software and all have a lot to offer, but.. I wanted something so simple, so barebones, and so zen that it feels like it could belong on my old Commodore VIC-20. As any Linux nerd does, I couldn't find exactly what I wanted so I opted to build something else!
 
-* The questions that naturally arise are probably:
+The questions that naturally arise are probably the following:
 * Aren't there other static site publishing tools out there? Yep.
 * Do those tools have more bells and whistles? Most certainly. 
 * Do we really need yet another piece of software out there to do X? Nah.. probably not.
