@@ -57,6 +57,8 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
+![Image Description](/img/asset-1787693267295.png)
+
 **Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.3.snap –dangerous**
 
 He fired up the new build, played around for a few hours, made a couple worlds, backed up some worlds, and then destroyed a few others. No major issues to report! That same evening, his friend came over to our house and I overheard him showing it off with all its "cool" features and how he and I worked on it together. It was a heart warming and proud parent / subordinate software dev moment! 
