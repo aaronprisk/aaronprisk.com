@@ -45,21 +45,21 @@ Back in business (after a snack break) and my intrepid little PM had his world m
  
 *“Oh it’s easy you just click the…”*
 
-🤦 I forgot to add a function to delete words.. What a silly oversight!
+🤦 I forgot to add a function to delete worlds.. What a silly oversight!
 
-**Update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.1.snap –dangerous**
+**Update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.1.snap –dangerous**
 
-*“Hey the restore button doesnt work anymore.”*
+*“Hey the restore button doesn't work anymore.”*
 
 🤦 I accidentally broke the restore logic while I was adding the delete function.. typical regression..
 
-**Fix the regression, flask run –debug, snapcraft pack, snap install greystone_10.0.2.snap –dangerous**
+**Fix the regression, flask run –debug, snapcraft pack, snap install greystone_1.0.2.snap –dangerous**
 
-*“It's perfect now! It would be cool if the icon was a grey cube like the game..”*
+*“It's perfect now! It would be cool if the icon was a grey cube like in the game..”*
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
-**Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.3.snap –dangerous**
+**Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.3.snap –dangerous**
 
 ![Image Description](/img/asset-1787693908289.png)
 
@@ -74,8 +74,8 @@ Don’t just take it from him, give it a try yourself! You can now find greyston
 We spent the rest of the weekend installing it on various devices in our house and putting it through its paces. We've been brainstorming on how to improve it even more via additional tools for budding server admins and possibly a bedrock specific edition of the utility. Whatever we choose to do, we're going to make sure we maintain our initial scope, keep our project focused, and most importantly, do it together. :)
 
 ## Back to school
-My son may have started back to school the day of me posting this, but it was I who had to relearn some old lessons this week:
-* Don't make assumptions about your users. Ensure you're always questioning your biases and presuppositions.
+My son may have started back to school the day of me posting this, but it was I who had to relearn some old and still very important lessons this week:
+* Be careful making assumptions about your users. Ensure you're always questioning your biases and presuppositions.
 * Don't get so carried away fixing a bug that you break other core functionality.
 * Just because you CAN add more features doesn't mean you need to. Embrace the Unix philosophy. 
 * Computing should be fun! It's still a pretty magical human activity and is best enjoyed with a buddy.
