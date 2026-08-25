@@ -23,7 +23,7 @@ We sat down at my desk and drafted up a list of requirements:
 
 Given my new set of project priorities, I was off to work. After weighing various options, I opted for a familiar tech stack:
 * Python for the brains
-* Flask for the web sever
+* Flask for the web server
 * Vanilla CSS (Thank you Canonical colleagues!) to make it pretty
 * Snap to package it all up
 
@@ -34,7 +34,7 @@ After a minute or two of clicking and mechanical keyboard clacks, I hear a quiet
 
 *“So.. it's cool.. but how do I open it?”*
 
-Instead of a knee jerk *“well it's a server application, you have to use a web browser”* I stopped for a moment. Of course.. This isn’t common knowledge for many adults let alone a kiddo! We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu which opens the greystone URL in a user's browser. ✅ 
+Instead of a knee jerk *“well it's a server application, you have to use a web browser”* I stopped for a moment. Of course.. This isn’t common knowledge for many adults let alone a kiddo! We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher for the app menu that opens the greystone URL in a user's browser. ✅ 
 
 ![Image Description](/img/asset-1787693654628.png)
 
