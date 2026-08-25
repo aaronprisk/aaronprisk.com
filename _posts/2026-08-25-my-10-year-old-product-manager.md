@@ -28,13 +28,13 @@ Given my new set of project priorities, I was off to work. After weighing variou
 * Snap to package it all up
 
 ## One block at a time
-A couple evenings of fumbling around and lots of trial and error, Greystone was alive! It could download the latest Minecraft server jar file, launch the server, create a new world, and allow us to join in from the game client. For a console, we opted to go the lite route and have it write the java output to a text file that the dashboard could occasionally pull from. It seemed like that checklist he gave me was already done so I snapped it all up and we installed it onto his workstation. I felt a bit like a junior chef presenting their hastily made dish to Gordon Ramsey.
+A couple evenings of fumbling around and lots of trial and error, greystone was alive! It could download the latest Minecraft server jar file, launch the server, create a new world, and allow us to join in from the game client. For a console, we opted to go the lite route and have it write the java output to a text file that the dashboard could occasionally pull from. It seemed like that checklist he gave me was already done so I snapped it all up and we installed it onto his workstation. I felt a bit like a junior chef presenting their hastily made dish to Gordon Ramsey.
 
 After a minute or two of clicking and mechanical keyboard clacks, I hear a quiet and slightly apprehensive:
 
 *“So.. it's cool.. but how do I open it?”*
 
-Instead of a knee jerk “well it's a server application, you have to use a web browser” I stopped for a moment. Of course.. This isn’t common knowledge, for many adults let alone a kiddo. We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu and opens the Greystone URL in a browser. ✅ 
+Instead of a knee jerk “well it's a server application, you have to use a web browser” I stopped for a moment. Of course.. This isn’t common knowledge for many adults let alone a kiddo! We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu which opens the greystone URL in a user's browser. ✅ 
 
 ![Image Description](/img/asset-1787693654628.png)
 
@@ -59,13 +59,13 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
-![Image Description](/img/asset-1787693908289.png)
-
 **Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.3.snap –dangerous**
+
+![Image Description](/img/asset-1787693908289.png)
 
 He fired up the new build, played around for a few hours, made a couple worlds, backed up some worlds, and then destroyed a few others. No major issues to report! That same evening, his friend came over to our house and I overheard him showing it off with all its "cool" features and how he and I worked on it together. It was a heart warming and proud parent / subordinate software dev moment! 
 
-Don’t just take it from him, give it a try yourself! You can now find Greystone over on the Ubuntu Snap Store: 
+Don’t just take it from him, give it a try yourself! You can now find greystone over on the Ubuntu Snap Store: 
 [![Snap](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/greystone)
 
 ![Image Description](/img/asset-1787693925740.png)
