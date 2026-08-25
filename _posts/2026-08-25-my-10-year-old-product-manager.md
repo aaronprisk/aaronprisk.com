@@ -34,7 +34,7 @@ After a minute or two of clicking and mechanical keyboard clacks, I hear a quiet
 
 *“So.. it's cool.. but how do I open it?”*
 
-Instead of a knee jerk “well it's a server application, you have to use a web browser” I stopped for a moment. Of course.. This isn’t common knowledge for many adults let alone a kiddo! We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu which opens the greystone URL in a user's browser. ✅ 
+Instead of a knee jerk *“well it's a server application, you have to use a web browser”* I stopped for a moment. Of course.. This isn’t common knowledge for many adults let alone a kiddo! We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu which opens the greystone URL in a user's browser. ✅ 
 
 ![Image Description](/img/asset-1787693654628.png)
 
@@ -47,19 +47,19 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 🤦 I forgot to add a function to delete worlds.. What a silly oversight!
 
-**Update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.1.snap –dangerous**
+**Update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.1.snap**
 
 *“Hey the restore button doesn't work anymore.”*
 
 🤦 I accidentally broke the restore logic while I was adding the delete function.. typical regression..
 
-**Fix the regression, flask run –debug, snapcraft pack, snap install greystone_1.0.2.snap –dangerous**
+**Fix the regression, flask run –debug, snapcraft pack, snap install greystone_1.0.2.snap**
 
 *“It's perfect now! It would be cool if the icon was a grey cube like in the game..”*
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
-**Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.3.snap –dangerous**
+**Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_1.0.3.snap**
 
 ![Image Description](/img/asset-1787693908289.png)
 
