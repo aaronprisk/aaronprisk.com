@@ -8,6 +8,11 @@ tags: [Linux, Development, Minecraft]
 
 ![Image Description](/img/asset-1787692286654.png)
 
+<audio controls>
+  <source src="/audio/my-10-year-old-product-manager.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 My son Greyson just turned 10 this month. He's at that fun age where he wants to go beyond just playing games.. now he wants to modify them, expand them, and experiment with everything they can do. Naturally, when he gets the craving to cause voxel based chaos, he asks me to fire up another Minecraft server on my little Ubuntu powered Mac mini server, lovingly named Odin (as shown below).
 
 ![Image Description](/img/asset-1787693706729.jpg)
