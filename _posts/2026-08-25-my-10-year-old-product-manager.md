@@ -49,7 +49,7 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 **Update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.1.snap –dangerous**
 
-*“Hey the restore button doesnt work anymore”*
+*“Hey the restore button doesnt work anymore.”*
 
 🤦 I accidentally broke the restore logic while I was adding the delete function.. typical regression..
 
@@ -63,7 +63,7 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 ![Image Description](/img/asset-1787693908289.png)
 
-He fired up the new build, played around for a few hours, made a couple worlds, backed up some worlds, and then destroyed a few others. No major issues to report! That same evening, his friend came over to our house and I overheard him showing it off with all its "cool" features and how he and I worked on it together. It was a heart warming and proud parent / subordinate software dev moment! 
+He fired up the new build, played around for a few hours, made a couple worlds, destroyed a few others. No major issues to report! That same evening, his friend came over to our house and I overheard him showing it off with all its "cool" features and how he and I worked on it together. It was a heart warming and proud parent / subordinate software dev moment! 
 
 Don’t just take it from him, give it a try yourself! You can now find greystone over on the Ubuntu Snap Store: 
 [![Snap](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/greystone)
