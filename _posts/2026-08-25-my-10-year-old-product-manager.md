@@ -59,7 +59,7 @@ Back in business (after a snack break) and my intrepid little PM had his world m
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
-![Image Description](/img/asset-1787693267295.png)
+![Image Description](/img/asset-1787693908289.png)
 
 **Scrap the old icon, fire up aesprite, realize isometric letters are difficult, update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.3.snap –dangerous**
 
@@ -68,7 +68,7 @@ He fired up the new build, played around for a few hours, made a couple worlds, 
 Don’t just take it from him, give it a try yourself! You can now find Greystone over on the Ubuntu Snap Store: 
 [![Snap](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/greystone)
 
-![Image Description](/img/asset-1787692453278.png)
+![Image Description](/img/asset-1787693925740.png)
 
 ## Crafting our roadmap 
 We spent the rest of the weekend installing it on various devices in our house and putting it through its paces. We've been brainstorming on how to improve it even more via additional tools for budding server admins and possibly a bedrock specific edition of the utility. Whatever we choose to do, we're going to make sure we maintain our initial scope, keep our project focused, and most importantly, do it together. :)
