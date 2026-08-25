@@ -10,7 +10,7 @@ tags: [Linux, Development, Minecraft]
 
 My son just turned 10 this month. He's at that fun age where he wants to go beyond just playing games and wants to modify them, expand them and experiment with what all they can do. Naturally, when he gets the craving to cause voxel based chaos, he asks me to fire up another Minecraft server on my little Ubuntu powered Mac Mini server, lovingly named Odin (as shown below)
 
-![Image Description](/img/asset-1787692344682.jpg)
+![Image Description](/img/asset-1787693706729.jpg)
 
 I was just about to start the usual routine of pulling down the latest Minecraft server jar file and rigging up a systemd service when I had a crazy thought.. wouldn't it be cool if there was a tool for my kiddo to do all this. Sure there are other Minecraft server managers out there, a few of which he and I had used in the past, but each felt a bit overkill and he never felt very comfortable using them. At that moment, I had an even crazier idea.. I would let my son take on the role of a product manager and he was to direct me in creating this perfect tool made just for him. I would do my best with the knowledge and tools at my disposal to translate his vision into a viable product.
 
@@ -32,28 +32,30 @@ A couple evenings of fumbling around and lots of trial and error, Greystone was 
 
 After a minute or two of clicking and mechanical keyboard clacks, I hear a quiet and slightly apprehensive:
 
-> “So.. it's cool.. but how do I open it?”
+*“So.. it's cool.. but how do I open it?”*
 
 Instead of a knee jerk “well it's a server application, you have to use a web browser” I stopped for a moment. Of course.. This isn’t common knowledge, for many adults let alone a kiddo. We take for granted that many users have no idea how these types of web servers work. There was no post install prompt or welcome screen so naturally he would feel a bit lost and his first instinct was a reasonable and enlightening one. I created a desktop launcher that is added to the app menu and opens the Greystone URL in a browser. ✅ 
+
+![Image Description](/img/asset-1787693654628.png)
 
 ## Trial by friendly fire 
 Back in business (after a snack break) and my intrepid little PM had his world made and already tested out the backup and restore functions. Everything was going great until..
 
-> “I don't want this old world, how can I delete it?”
-> 
-> “Oh it’s easy you just click the…”
+*“I don't want this old world, how can I delete it?”*
+ 
+*“Oh it’s easy you just click the…”*
 
 🤦 I forgot to add a function to delete words.. What a silly oversight!
 
 **Update the code, flask run –debug, snapcraft pack, snap install greystone_10.0.1.snap –dangerous**
 
-> “Hey the restore button doesnt work anymore”
+*“Hey the restore button doesnt work anymore”*
 
 🤦 I accidentally broke the restore logic while I was adding the delete function.. typical regression..
 
 **Fix the regression, flask run –debug, snapcraft pack, snap install greystone_10.0.2.snap –dangerous**
 
-> “It's perfect now! It would be cool if the icon was a grey cube like the game..”
+*“It's perfect now! It would be cool if the icon was a grey cube like the game..”*
 
 🤦 He's right again.. the lazy logo I made in GIMP in about 30 seconds was pretty lame. Plus a lot of people will judge an application by its branding and first impression.
 
