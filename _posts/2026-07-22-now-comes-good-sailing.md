@@ -6,6 +6,13 @@ description: "Introduction to Walden - A minimal, distraction-free, local deskto
 tags: [Linux, Ubuntu, Snap, Walden]
 ---
 
+![Image Description](/img/asset-1787750340045.jpg)
+
+<audio controls>
+  <source src="/audio/now-comes-good-sailing.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 To kick off this summer, I decided to read Walden by Henry David Thoreau, the great American novelist and transcendentalist thinker. Almost immediately did I feel a strong kinship to Henry and his desire to escape the often overwhelming and obfuscating nature of modern life. To capture, as he puts it so eloquently, “..to want but little.” This yearning to find joy, peace and contentment in having less when there is a constant barrage of voices pushing you to pursue more.
 
 ## My slice of the interwebs
